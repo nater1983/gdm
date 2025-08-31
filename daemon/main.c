@@ -151,16 +151,16 @@ gdm_daemon_ensure_dirs (uid_t uid,
 {
         g_autoptr (GError) error = NULL;
 
-        /* Set up /run/gdm */
-        if (!gdm_ensure_dir (GDM_RUN_DIR, 0, 0, 0755, FALSE, &error)) {
-                g_warning ("Failed to create " GDM_RUN_DIR ": %s", error->message);
-                g_clear_error (&error);
+        /* Set up /var/run/gdm */
+        if (!ensure_dir_with_perms (GDM_RAN_ONCE_MARKER_DIR, 0, gid, 0711, &error)) {
+                g_critical (_("Failed to create ran once marker dir %s: %s"),
+                            GDM_RAN_ONCE_MARKER_DIR, error->message);
         }
 
         /* Set up /var/log/gdm */
         if (!gdm_ensure_dir (LOGDIR, 0, gid, 0711, FALSE, &error)) {
-                g_warning ("Failed to create " LOGDIR ": %s", error->message);
-                g_clear_error (&error);
+                g_critical (_("Failed to create LogDir %s: %s"),
+                            LOGDIR, error->message);
         }
 }
 
