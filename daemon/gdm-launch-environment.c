@@ -306,17 +306,10 @@ build_launch_environment (GdmLaunchEnvironment *launch_environment,
 
         if (start_session && launch_environment->x11_display_seat_id != NULL) {
                 char *seat_id;
-                char *config_dir;
-                char *state_dir;
 
                 seat_id = launch_environment->x11_display_seat_id;
 
                 g_hash_table_insert (hash, g_strdup ("GDM_SEAT_ID"), g_strdup (seat_id));
-
-                if (setup_seat_persist_dirs(seat_id, launch_environment->dyn_uid, &config_dir, &state_dir)) {
-                        g_hash_table_insert (hash, g_strdup ("XDG_CONFIG_HOME"), config_dir);
-                        g_hash_table_insert (hash, g_strdup ("XDG_STATE_HOME"), state_dir);
-                }
         }
 
         g_hash_table_insert (hash, g_strdup ("RUNNING_UNDER_GDM"), g_strdup ("true"));
